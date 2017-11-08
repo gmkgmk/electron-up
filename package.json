@@ -1,0 +1,29 @@
+{
+  "name": "belle-bdp",
+  "main": "main.js",
+  "version": "0.0.1",
+  "author": "guo.mk",
+  "description": "electron测试公司",
+  "scripts": {
+    "start": "electron .",
+    "build": "build --win",
+    "ship": "build --win -p always"
+  },
+  "devDependencies": {
+    "electron": "^1.7.9",
+    "electron-builder": "^19.45.0"
+  },
+  "dependencies": {
+    "asar": "^0.14.0",
+    "electron-log": "^2.2.11",
+    "electron-updater": "^2.16.1",
+    "semver": "^5.4.1"
+  },
+  "build": {
+    "appId": "com.github.gmkgmk.belleddp",
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "repository": "https://github.com/gmkgmk/electron-up"
+}
