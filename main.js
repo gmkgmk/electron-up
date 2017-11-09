@@ -61,7 +61,7 @@ function sendStatusToWindow(text) {
 }
 function createDefaultWindow() {
   win = new BrowserWindow();
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
   win.on("closed", () => {
     win = null;
   });
