@@ -1,10 +1,11 @@
 {
   "name": "belle-bdp",
   "main": "main.js",
-  "version": "0.0.8",
+  "version": "0.1.7",
   "author": "guo.mk",
   "description": "electron测试公司",
   "scripts": {
+    "dev": "nodemon  app.js",
     "start": "electron .",
     "build": "build --win",
     "ship": "build --win -p always"
@@ -17,18 +18,25 @@
     "asar": "^0.14.0",
     "electron-log": "^2.2.11",
     "electron-updater": "^2.16.1",
+    "koa": "^2.4.1",
+    "koa-static": "^4.0.1",
+    "nodemon": "^1.12.1",
     "semver": "^5.4.1"
   },
   "build": {
     "appId": "com.github.gmkgmk.belleddp",
     "productName": "测试名称",
+    "publish": {
+      "provider": "generic",
+      "url": "http://www.gmkgmk.com:8080"
+    },
     "nsis": {
       "artifactName": "belle-bdp-${version}.${ext}",
       "runAfterFinish": false,
       "deleteAppDataOnUninstall": true,
       "allowToChangeInstallationDirectory": true,
       "oneClick": false,
-      "installerLanguages":"zh_CN",
+      "installerLanguages": "zh_CN",
       "language": 2052
     },
     "win": {

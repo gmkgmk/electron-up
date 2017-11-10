@@ -3,11 +3,31 @@
 
 <head>
     <title>自动更新 Example</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+
+        #version {
+            background: #f1f1f1;
+        }
+
+        .new {
+            background: #3d49f8;
+            height: 40px;
+            padding: 5px;
+        }
+
+        #btn {}
+    </style>
 </head>
 
 <body>
-    Current version:
-    <span id="version">vX.Y.Z</span>
+    <p>
+        当前版本是：
+        <span id="version">vX.Y.Z</span>
+        <span id="msg"></span>
+    </p>
     <div id="messages"></div>
     <script>
         // Display the current version
@@ -15,11 +35,31 @@
         document.getElementById('version').innerText = version;
         // Listen for messages
         const { ipcRenderer } = require('electron');
-        ipcRenderer.on('message', function (event, text) {
-            var container = document.getElementById('messages');
-            var message = document.createElement('div');
-            message.innerHTML = text;
-            container.appendChild(message);
+        ipcRenderer.on('message', function (event, message) {
+            console.log(message)
+            let container = document.getElementById('msg');
+            // message.innerHTML = text;
+            const status = message.status;
+            const info = message.msg || "";
+            switch (status) {
+                case 1:
+                    message.text = info
+                    break;
+                case 2:
+                    message.text = info
+                    message.classList.add("new");
+                    break;
+                case 3:
+                    message.text = info
+                    break;
+                case 4:
+                    message.text = info
+                    break;
+                case 5:
+                    message.text = info
+                    break;
+            }
+            container.innerHTML = message;
         })
     </script>
 </body>

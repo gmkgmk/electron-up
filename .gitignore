@@ -1,9 +1,4 @@
 # dependencies
 /node_modules
-
 # production
-/build
 /dist
-
-dev-app-update.yml
-electron_test_github.rar
