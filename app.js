@@ -4,7 +4,7 @@ const app = new Koa();
 const koaStatic = require("koa-static");
 const path = require("path");
 const fs = require("fs");
-const PORT = 80;
+const PORT = 8080;
 let getBaseUrl = "http://localhost:8080";
 app.use(koaStatic(path.join(__dirname, "dist")));
 

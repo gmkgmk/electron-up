@@ -1,7 +1,7 @@
 {
   "name": "belle-bdp",
   "main": "main.js",
-  "version": "0.2.6",
+  "version": "0.3.1",
   "author": "guo.mk",
   "description": "electron测试公司",
   "scripts": {
@@ -28,7 +28,7 @@
     "productName": "测试名称",
     "publish": {
       "provider": "generic",
-      "url": "http://www.gmkgmk.com:8080"
+      "url": "http://localhost:8080"
     },
     "nsis": {
       "artifactName": "belle-bdp-${version}.${ext}",
@@ -38,7 +38,7 @@
       "oneClick": false,
       "installerLanguages": "zh_CN",
       "language": 2052,
-      "perMachine":false
+      "perMachine":true
     },
     "win": {
       "target": "nsis",

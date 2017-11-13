@@ -43,6 +43,20 @@
         .show {
             display: block !important;
         }
+
+        .update_btn {
+            padding: 5px;
+            background: rgb(15, 158, 253);
+            border-radius: 5px;
+            color: #fff;
+            max-width: 30px;
+            display: none;
+        }
+
+        .update_btn:hover {
+            cursor: pointer;
+            opacity: .9
+        }
     </style>
 </head>
 
@@ -50,53 +64,96 @@
     <div id="messages">
         当前版本是：
         <span id="version">vX.Y.Z </span>
-        <div id="msg" class="show gray">
+        <!-- <div id="msg" class="show gray">
             <span class="jianchagengxin"></span>
             <span class="zhengzaigengxin server">(
                 <span class="updating"></span>)</span>
             <span class="zuijinbanben"></span>
             <span class="gengxinwancheng">
             </span>
-        </div>
+        </div> -->
+        <div id="box"></div>
+        <span class="update_btn">点击下载</span>
     </div>
     <script>
         let version = window.location.hash.substring(1);
         document.getElementById('version').innerText = version;
 
         const { ipcRenderer } = require('electron');
-        ipcRenderer.on('message', function (event, res) {
-            console.log(res)
-            let container = document.getElementById('msg');
-            let message = null;
+        // 自动更新
+        function autoUpdate() {
+            ipcRenderer.on('message', function (event, res) {
+                console.log(res)
+                let container = document.getElementById('msg');
+                let message = null;
 
-            const status = res.status;
+                const status = res.status;
 
 
-            const info = res.msg || "";
+                const info = res.msg || "";
 
-            switch (status) {
-                case 1:
-                    $$(".jianchagengxin").classList.add("show")
-                    $$(".jianchagengxin").innerHTML = info
-                    break;
-                case 2:
-                    $$(".zhengzaigengxin").classList.add("show")
-                    $$(".updating").innerHTML = info
-                    break;
-                case 3:
-                    $$(".zuijinbanben").classList.add("show")
-                    $$(".zuijinbanben").innerHTML = info
-                    break;
-                case 4:
-                    $$(".gengxinwancheng").classList.add("show")
-                    $$(".gengxinwancheng").innerHTML = info
-                    break;
-                case 5:
-                    $$("#msg").innerHTML = info
-                    break;
-            }
-        })
+                switch (status) {
+                    case 1:
+                        $$(".jianchagengxin").classList.add("show")
+                        $$(".jianchagengxin").innerHTML = info
+                        break;
+                    case 2:
+                        $$(".zhengzaigengxin").classList.add("show")
+                        $$(".updating").innerHTML = info
+                        break;
+                    case 3:
+                        $$(".zuijinbanben").classList.add("show")
+                        $$(".zuijinbanben").innerHTML = info
+                        break;
+                    case 4:
+                        $$(".gengxinwancheng").classList.add("show")
+                        $$(".gengxinwancheng").innerHTML = info
+                        break;
+                    case 5:
+                        $$("#msg").innerHTML = info
+                        break;
+                }
+            })
+        }
+        // 手动更新
+        function handleUpdate() {
 
+            ipcRenderer.on('message', function (event, res) {
+                $$(".update_btn").classList.remove("show")
+                console.log(res)
+                let container = document.getElementById('box');
+                let message = null;
+                let span = document.createElement("span")
+
+                const status = res.status;
+
+                const info = res.msg || "";
+                message = info;
+                switch (status) {
+                    case 1:
+                        break;
+                    case 2:
+                        $$(".update_btn").classList.add("show")
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                }
+                container.innerHTML = message
+            })
+
+
+
+
+            $$(".update_btn").addEventListener("click", function () {
+                ipcRenderer.send('update')
+            })
+        }
+        // autoUpdate()
+        handleUpdate()
         function $$(param) {
             return document.querySelector(param)
         }
