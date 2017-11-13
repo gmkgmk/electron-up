@@ -1,7 +1,7 @@
 {
   "name": "belle-bdp",
   "main": "main.js",
-  "version": "0.1.7",
+  "version": "0.2.6",
   "author": "guo.mk",
   "description": "electron测试公司",
   "scripts": {
@@ -37,7 +37,8 @@
       "allowToChangeInstallationDirectory": true,
       "oneClick": false,
       "installerLanguages": "zh_CN",
-      "language": 2052
+      "language": 2052,
+      "perMachine":false
     },
     "win": {
       "target": "nsis",

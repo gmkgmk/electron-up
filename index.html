@@ -6,61 +6,100 @@
     <style>
         body {
             background: #ddd;
+            padding: 0;
+            margin: 0
         }
 
-        #version {
-            background: #f1f1f1;
+        #msg.show {
+            display: block;
         }
 
-        .new {
-            background: #3d49f8;
-            height: 40px;
+        #msg {
+            display: none;
+            font-size: 12px;
+        }
+
+        #messages {
+            min-height: 80px;
+            width: 100%;
+            background: #b6b5b5;
             padding: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
         }
 
-        #btn {}
+
+        .gray {
+            color: gray;
+        }
+
+        .jianchagengxin,
+        .zhengzaigengxin,
+        .gengxinwancheng,
+        .zuijinbanben {
+            display: none;
+        }
+
+        .show {
+            display: block !important;
+        }
     </style>
 </head>
 
 <body>
-    <p>
+    <div id="messages">
         当前版本是：
-        <span id="version">vX.Y.Z</span>
-        <span id="msg"></span>
-    </p>
-    <div id="messages"></div>
+        <span id="version">vX.Y.Z </span>
+        <div id="msg" class="show gray">
+            <span class="jianchagengxin"></span>
+            <span class="zhengzaigengxin server">(
+                <span class="updating"></span>)</span>
+            <span class="zuijinbanben"></span>
+            <span class="gengxinwancheng">
+            </span>
+        </div>
+    </div>
     <script>
-        // Display the current version
         let version = window.location.hash.substring(1);
         document.getElementById('version').innerText = version;
-        // Listen for messages
+
         const { ipcRenderer } = require('electron');
-        ipcRenderer.on('message', function (event, message) {
-            console.log(message)
+        ipcRenderer.on('message', function (event, res) {
+            console.log(res)
             let container = document.getElementById('msg');
-            // message.innerHTML = text;
-            const status = message.status;
-            const info = message.msg || "";
+            let message = null;
+
+            const status = res.status;
+
+
+            const info = res.msg || "";
+
             switch (status) {
                 case 1:
-                    message.text = info
+                    $$(".jianchagengxin").classList.add("show")
+                    $$(".jianchagengxin").innerHTML = info
                     break;
                 case 2:
-                    message.text = info
-                    message.classList.add("new");
+                    $$(".zhengzaigengxin").classList.add("show")
+                    $$(".updating").innerHTML = info
                     break;
                 case 3:
-                    message.text = info
+                    $$(".zuijinbanben").classList.add("show")
+                    $$(".zuijinbanben").innerHTML = info
                     break;
                 case 4:
-                    message.text = info
+                    $$(".gengxinwancheng").classList.add("show")
+                    $$(".gengxinwancheng").innerHTML = info
                     break;
                 case 5:
-                    message.text = info
+                    $$("#msg").innerHTML = info
                     break;
             }
-            container.innerHTML = message;
         })
+
+        function $$(param) {
+            return document.querySelector(param)
+        }
     </script>
 </body>
 

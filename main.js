@@ -48,11 +48,13 @@ let win;
 function createDefaultWindow() {
   win = new BrowserWindow({
     title: app.getName(),
-    resizable: false,
-    modal: true,
+    type: "toolbar",
+    center: true,
     backgroundColor: "#2e2c29",
-    width: 800,
-    height: 600
+    width: 1100,
+    height: 1000,
+    minWidth: 800,
+    minHeight: 600
   });
   win.webContents.openDevTools();
   win.on("closed", () => {
@@ -91,7 +93,7 @@ function updateHandle() {
   autoUpdater.on("update-available", info => {
     sendStatusToWindow({
       status: 2,
-      msg: info
+      msg: message.updateAva
     });
   });
   autoUpdater.on("update-not-available", info => {
@@ -107,25 +109,27 @@ function updateHandle() {
     });
   });
   autoUpdater.on("download-progress", progressObj => {
-    let log_message = "";
-    log_message = log_message + " - Downloaded " + progressObj.percent + "%";
-    log_message =
-      log_message +
-      " (" +
-      progressObj.transferred +
-      "/" +
-      progressObj.total +
-      ")";
-
+    // let log_message = "";
+    // log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+    // log_message =
+    //   log_message +
+    //   " (" +
+    //   progressObj.transferred +
+    //   "/" +
+    //   progressObj.total +
+    //   ")";
+    let log_message = parseInt(progressObj.percent) + "%";
     sendStatusToWindow({
       status: 4,
-      msg: log_message
+      msg: log_message,
+      obj:progressObj
     });
   });
   autoUpdater.on("update-downloaded", info => {
     sendStatusToWindow({
       status: 5,
-      msg: message.updateDownloaded + info.releaseName
+      msg: message.updateDownloaded ,
+      obj:info
     });
   });
 
