@@ -1,9 +1,9 @@
 {
-  "name": "belle-bdp",
+  "name": "belle",
   "main": "main.js",
-  "version": "0.3.1",
-  "author": "guo.mk",
-  "description": "electron测试公司",
+  "version": "0.3.2",
+  "author": "belle",
+  "description": "百丽数据平台",
   "scripts": {
     "dev": "nodemon  app.js",
     "start": "electron .",
@@ -24,21 +24,21 @@
     "semver": "^5.4.1"
   },
   "build": {
-    "appId": "com.github.gmkgmk.belleddp",
-    "productName": "测试名称",
+    "appId": "com.belle",
+    "productName": "百丽数据平台",
     "publish": {
       "provider": "generic",
       "url": "http://localhost:8080"
     },
     "nsis": {
-      "artifactName": "belle-bdp-${version}.${ext}",
+      "artifactName": "${productName}-${version}.${ext}",
       "runAfterFinish": false,
       "deleteAppDataOnUninstall": true,
       "allowToChangeInstallationDirectory": true,
       "oneClick": false,
       "installerLanguages": "zh_CN",
       "language": 2052,
-      "perMachine":true
+      "perMachine": true
     },
     "win": {
       "target": "nsis",

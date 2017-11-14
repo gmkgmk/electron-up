@@ -7,6 +7,7 @@ const {
   ipcMain
 } = require("electron");
 const log = require("electron-log");
+const path = require("path");
 const { autoUpdater } = require("electron-updater");
 //-------------------------------------------------------------------
 //
@@ -40,6 +41,7 @@ const template = [
     ]
   }
 ];
+app.setUserTasks([])
 
 //-------------------------------------------------------------------
 //初始化窗口;
@@ -48,22 +50,27 @@ let win;
 function createDefaultWindow() {
   win = new BrowserWindow({
     title: app.getName(),
-    type: "toolbar",
     center: true,
     backgroundColor: "#2e2c29",
-    width: 1100,
-    height: 1000,
+    icon: path.join(__dirname+"/icon/icon.ico"),//任务栏图标
+    show: false,//先关闭，等渲染好在hsow
+    width: 1360,
+    height: 760,
     minWidth: 800,
-    minHeight: 600
+    minHeight: 600,
+    maximizable: true,//是否最大化
+    minimizable: true,//是否最小化
   });
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
   win.on("closed", () => {
     win = null;
   });
   win.once("ready-to-show", () => {
     win.show();
   });
-  win.loadURL(`file://${__dirname}/index.html#v${app.getVersion()}`);
+
+  // win.loadURL(`file://${__dirname}/index.html#v${app.getVersion()}`);
+  win.loadURL(`http://bdp.belle.net.cn`);
   return win;
 }
 function sendStatusToWindow(text) {
@@ -175,6 +182,7 @@ function updateWIthHandle() {
   });
   autoUpdater.on("download-progress", progressObj => {
     let log_message = parseInt(progressObj.percent) + "%";
+    win.setProgressBar(parseInt(progressObj.percent / 100));
     sendStatusToWindow({
       status: 4,
       msg: "下载中，已下载" + log_message,
@@ -188,8 +196,8 @@ function updateWIthHandle() {
     });
   });
   autoUpdater.on("update-downloaded", info => {
-    let version = info
-    console.log(version)
+    let version = info;
+    console.log(version);
     sendStatusToWindow({
       status: 5,
       msg: message.updateDownloaded,
@@ -221,7 +229,6 @@ app.on("window-all-closed", () => {
 app.on("before-quit", () => {
   appQuit();
 });
-
 function appQuit() {
   dialog.showMessageBox(
     win,
